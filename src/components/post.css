@@ -1,0 +1,19 @@
+.post {
+  max-width: 350px;
+  background-color: #fff;
+  margin: 10px 0px;
+  border: 1px solid lightgray;
+}
+.post__header {
+  display: flex;
+  align-items: center;
+}
+.post__header h4 {
+  margin-left: 5px;
+}
+.post__img {
+  width: 100%;
+  object-fit: contain;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
+}
