@@ -4,6 +4,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ImageUpload = ({ user }) => {
   const [image, setImage] = useState();
@@ -23,7 +24,6 @@ const ImageUpload = ({ user }) => {
     }
   };
   const handleUpload = () => {
-    console.log(image);
     const storageRef = ref(storage, `images/${uuidv4()}`);
     const uploadTask = uploadBytesResumable(storageRef, image);
     uploadTask.on(
@@ -47,7 +47,7 @@ const ImageUpload = ({ user }) => {
           const username = user.email.split("@");
           addPost(downloadURL, caption, username[0]).then(() => {
             setCaption("");
-            setImage("");
+            setImage(null);
             setProgress("");
           });
         });
@@ -55,18 +55,24 @@ const ImageUpload = ({ user }) => {
     );
   };
   return (
-    <div>
-      <Input
-        type="text"
-        value={caption}
-        onChange={(e) => setCaption(e.target.value)}
-        placeholder="caption"
-      />
-      <Input onChange={(e) => handleChange(e)} type="file" />
-      <Button onClick={handleUpload} disabled={isUploading}>
-        Upload
-      </Button>
-    </div>
+    <>
+      {isUploading ? (
+        <CircularProgress onProgress={progress} />
+      ) : (
+        <div>
+          <Input
+            type="text"
+            value={caption}
+            onChange={(e) => setCaption(e.target.value)}
+            placeholder="caption"
+          />
+          <Input onChange={(e) => handleChange(e)} type="file" />
+          <Button onClick={handleUpload} disabled={isUploading}>
+            Upload
+          </Button>
+        </div>
+      )}
+    </>
   );
 };
 

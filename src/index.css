@@ -12,13 +12,24 @@ body {
 .app__header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: #ffffff;
-  padding: 15px;
+  padding: 15px 40px;
   border-bottom: 1px solid lightgray;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  z-index: 100;
 }
 .signupmodal__form {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.app_posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 50px;
 }

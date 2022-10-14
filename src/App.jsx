@@ -1,7 +1,7 @@
 import logo from "../src/assets/logo.png";
 import Post from "./components/Post";
 import { useState, useEffect } from "react";
-import { collection, getDocs, doc, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import SignUpModal from "./components/SignUpModal";
 import LogInModal from "./components/LogInModal";
 import ImageUpload from "./components/ImageUpload";
@@ -89,14 +89,18 @@ function App() {
         close={setIsLoginOpen}
       />
       {user ? <ImageUpload user={user} /> : <div>please sign in to upload</div>}
-      {posts?.map((post) => (
-        <Post
-          key={post.id}
-          caption={post.caption}
-          imgUrl={post.imgUrl}
-          userName={post.userName}
-        />
-      ))}
+      <div className="app_posts">
+        {posts?.map((post) => (
+          <Post
+            key={post.id}
+            id={post.id}
+            author={user.email.split("@")[0]}
+            caption={post.caption}
+            imgUrl={post.imgUrl}
+            userName={post.userName}
+          />
+        ))}
+      </div>
     </div>
   );
 }
