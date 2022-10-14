@@ -88,18 +88,24 @@ function App() {
         onClose={() => setIsLoginOpen(false)}
         close={setIsLoginOpen}
       />
-      {user ? <ImageUpload user={user} /> : <div>please sign in to upload</div>}
       <div className="app_posts">
         {posts?.map((post) => (
           <Post
             key={post.id}
             id={post.id}
-            author={user.email.split("@")[0]}
+            author={user?.email.split("@")[0]}
             caption={post.caption}
             imgUrl={post.imgUrl}
             userName={post.userName}
           />
         ))}
+      </div>
+      <div className="app__upload">
+        {user ? (
+          <ImageUpload user={user} />
+        ) : (
+          <div>please sign in to upload</div>
+        )}
       </div>
     </div>
   );

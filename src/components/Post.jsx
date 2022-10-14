@@ -48,23 +48,36 @@ const Post = ({ userName, imgUrl, caption, id, author }) => {
       <div className="post__footer">
         <p>
           {" "}
-          <strong>{userName}</strong> {"  "} {caption}
+          <strong>{userName}</strong> {caption}
         </p>
       </div>
       <div className="post__comments">
-        <div>
-          <Input value={comment} onChange={(e) => setComment(e.target.value)} />{" "}
-          <Button
-            disabled={!comment}
-            onClick={(e) => addComment(e, comment).then(() => setComment(" "))}
-          >
-            post
-          </Button>
-        </div>
-        {comments.map((comment) => (
+        {author ? (
+          <div className="post__comment">
+            <Input
+              className="post__comment_input"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />{" "}
+            <Button
+              className="post__comment_button"
+              disabled={!comment}
+              onClick={(e) =>
+                addComment(e, comment).then(() => setComment(" "))
+              }
+            >
+              post
+            </Button>
+          </div>
+        ) : (
           <p>
-            <strong>{comment.author}</strong>
-            {comment.text}
+            <strong>YOU NEED TO LOGIN IN ORDER TO COMMENT</strong>
+          </p>
+        )}
+
+        {comments.map((comment) => (
+          <p className="post__comments">
+            <strong>{comment.author}</strong> {comment.text}
           </p>
         ))}
       </div>

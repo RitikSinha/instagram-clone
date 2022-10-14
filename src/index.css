@@ -14,7 +14,7 @@ body {
   align-items: center;
   justify-content: space-around;
   background-color: #ffffff;
-  padding: 15px 40px;
+  padding: 15px;
   border-bottom: 1px solid lightgray;
   position: fixed;
   top: 0;
@@ -31,5 +31,26 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 50px;
+  padding-top: 70px;
+}
+.app__upload {
+  background-color: #ffffff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid lightgray;
+}
+
+.post__comment {
+  display: flex;
+}
+.post__comment_input {
+  flex: 1;
+}
+.post__comment_button {
+  flex: 0;
 }

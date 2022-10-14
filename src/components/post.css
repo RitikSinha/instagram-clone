@@ -18,3 +18,9 @@
   border-bottom: 1px solid lightgray;
   border-top: 1px solid lightgray;
 }
+.post__comments {
+  padding: 5px;
+}
+.post__footer {
+  padding: 5px;
+}
