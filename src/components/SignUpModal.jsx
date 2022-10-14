@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Box, Typography, Input, Button } from "@mui/material";
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const style = {
   position: "absolute",
@@ -13,18 +15,35 @@ const style = {
   p: 4,
 };
 
-const SignUpModal = ({ open, onClose }) => {
+const SignUpModal = ({ open, onClose, close }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const handleSignup = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        user.displayName = username;
+        setEmail("");
+        setPassword("");
+        setUsername("");
+        close(false);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        alert(errorMessage);
 
+        // ..
+      });
+  };
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={style}>
         <Typography id="modal-modal-title" variant="h6" component="h2">
           Signup
         </Typography>
-        <form className="signupmodal__form">
+        <form className="signupmodal__form" onSubmit={handleSignup}>
           <Input
             placeholder="username"
             value={username}
@@ -43,7 +62,7 @@ const SignUpModal = ({ open, onClose }) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button>Sign Up</Button>
+          <Button onClick={handleSignup}>Sign Up</Button>
         </form>
       </Box>
     </Modal>

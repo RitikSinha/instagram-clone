@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA-85ItlW_OuErzvTJ8yXXMhPV45hgmfys",
@@ -12,8 +14,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const appCheck = initializeAppCheck(app, {
-  provider: new ReCaptchaV3Provider("instagram-clone"),
-  isTokenAutoRefreshEnabled: true,
-});
+try {
+  const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider("instagram-clone"),
+    isTokenAutoRefreshEnabled: true,
+  });
+} catch (e) {
+  console.log(e);
+}
+
 export const db = getFirestore(app);
+export const auth = getAuth();
+export const storage = getStorage(app);
