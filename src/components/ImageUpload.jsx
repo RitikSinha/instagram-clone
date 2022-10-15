@@ -2,7 +2,7 @@ import { Button, Input } from "@mui/material";
 import React, { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage, db } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { uuidv4 } from "@firebase/util";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -16,6 +16,7 @@ const ImageUpload = ({ user }) => {
       userName: userName,
       caption: cap,
       imgUrl: url,
+      timeStamp: serverTimestamp(),
     });
   };
   const handleChange = (e) => {

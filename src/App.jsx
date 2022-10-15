@@ -1,13 +1,12 @@
 import logo from "../src/assets/logo.png";
 import Post from "./components/Post";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy } from "firebase/firestore";
 import SignUpModal from "./components/SignUpModal";
 import LogInModal from "./components/LogInModal";
 import ImageUpload from "./components/ImageUpload";
 import { db, auth } from "./firebase";
 import { Button } from "@mui/material";
-import { async } from "@firebase/util";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -17,8 +16,8 @@ function App() {
   const getData = () => {
     const unsubscribe = onSnapshot(
       collection(db, "posts"),
+
       (querySnapshot) => {
-        console.log(querySnapshot);
         setPosts(
           querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
         );
@@ -32,10 +31,9 @@ function App() {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-    return unsubscribe();
   });
   useEffect(() => {
     getData();
@@ -89,16 +87,20 @@ function App() {
         close={setIsLoginOpen}
       />
       <div className="app_posts">
-        {posts?.map((post) => (
-          <Post
-            key={post.id}
-            id={post.id}
-            author={user?.email.split("@")[0]}
-            caption={post.caption}
-            imgUrl={post.imgUrl}
-            userName={post.userName}
-          />
-        ))}
+        {posts
+          ?.sort((a, b) =>
+            a.timeStamp < b.timeStamp ? 1 : b.timeStamp < a.timeStamp ? -1 : 0
+          )
+          .map((post) => (
+            <Post
+              key={post.id}
+              id={post.id}
+              author={user?.email.split("@")[0]}
+              caption={post.caption}
+              imgUrl={post.imgUrl}
+              userName={post.userName}
+            />
+          ))}
       </div>
       <div className="app__upload">
         {user ? (
