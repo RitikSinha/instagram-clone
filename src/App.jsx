@@ -1,7 +1,7 @@
 import logo from "../src/assets/logo.png";
 import Post from "./components/Post";
 import { useState, useEffect } from "react";
-import { collection, onSnapshot, orderBy } from "firebase/firestore";
+import { collection, onSnapshot } from "firebase/firestore";
 import SignUpModal from "./components/SignUpModal";
 import LogInModal from "./components/LogInModal";
 import ImageUpload from "./components/ImageUpload";
